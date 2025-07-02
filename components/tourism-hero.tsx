@@ -2,9 +2,11 @@
 
 import { motion } from "framer-motion"
 import { MapPin, ArrowRight } from "lucide-react"
+import { RainbowButton } from "@/components/ui/rainbow-button"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { BackgroundCircles } from "@/components/ui/background-circles"
 
 function ElegantShape({
   className,
@@ -88,134 +90,85 @@ export function TourismHero() {
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030303]">
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-500/[0.05] via-transparent to-blue-500/[0.05] blur-3xl" />
+      {/* Background Circles Component */}
+      <BackgroundCircles
+        title="Discover Local Heritage"
+        description="Explore ancient temples, traditional hotels, and vibrant local events in the twin cities of Hubballi-Dharwad"
+        variant="primary"
+        className="h-screen"
+      />
 
-      <div className="absolute inset-0 overflow-hidden">
-        <ElegantShape
-          delay={0.3}
-          width={600}
-          height={140}
-          rotate={12}
-          gradient="from-orange-500/[0.15]"
-          className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
-        />
-        <ElegantShape
-          delay={0.5}
-          width={500}
-          height={120}
-          rotate={-15}
-          gradient="from-blue-500/[0.15]"
-          className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
-        />
-        <ElegantShape
-          delay={0.4}
-          width={300}
-          height={80}
-          rotate={-8}
-          gradient="from-green-500/[0.15]"
-          className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
-        />
-        <ElegantShape
-          delay={0.6}
-          width={200}
-          height={60}
-          rotate={20}
-          gradient="from-yellow-500/[0.15]"
-          className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
-        />
-        <ElegantShape
-          delay={0.7}
-          width={150}
-          height={40}
-          rotate={-25}
-          gradient="from-purple-500/[0.15]"
-          className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
-        />
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4 md:px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            custom={0}
-            variants={fadeUpVariants}
-            initial="hidden"
-            animate="visible"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-8 md:mb-12"
-          >
-            <MapPin className="h-4 w-4 text-orange-400" />
-            <span className="text-sm text-white/60 tracking-wide">Hubballi-Dharwad</span>
-          </motion.div>
-
-          <motion.div custom={1} variants={fadeUpVariants} initial="hidden" animate="visible">
-            <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
-              <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
-                Discover Local
-              </span>
-              <br />
-              <span
-                className={cn(
-                  "bg-clip-text text-transparent bg-gradient-to-r from-orange-300 via-white/90 to-blue-300",
-                )}
-              >
-                Heritage
-              </span>
-            </h1>
-          </motion.div>
-
-          <motion.div custom={2} variants={fadeUpVariants} initial="hidden" animate="visible">
-            <p className="text-base sm:text-lg md:text-xl text-white/40 mb-12 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
-              Explore ancient temples, traditional hotels, and vibrant local events in the twin cities of
-              Hubballi-Dharwad. Your gateway to Karnataka's rich cultural heritage.
-            </p>
-          </motion.div>
-
-          <motion.div
-            custom={3}
-            variants={fadeUpVariants}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          >
-            <Link href="/explore">
-              <Button
-                size="lg"
-                className="text-lg px-8 py-6 h-auto bg-gradient-to-r from-orange-500 to-blue-500 hover:from-orange-600 hover:to-blue-600 border-0"
-              >
-                Explore Now
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Link href="/about">
-              <Button
-                variant="outline"
-                size="lg"
-                className="text-lg px-8 py-6 h-auto bg-transparent border-white/20 text-white hover:bg-white/10"
-              >
-                Learn More
-              </Button>
-            </Link>
-          </motion.div>
-
-          <motion.div
-            custom={4}
-            variants={fadeUpVariants}
-            initial="hidden"
-            animate="visible"
-            className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center"
-          >
-            <div className="bg-white/[0.02] border border-white/[0.08] rounded-lg p-6 backdrop-blur-sm">
-              <div className="text-3xl font-bold text-orange-400 mb-2">50+</div>
-              <div className="text-white/60">Ancient Temples</div>
+      {/* Overlay Content */}
+      <div className="absolute inset-0 flex items-center justify-center z-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex items-center justify-center mb-6">
+              <MapPin className="h-8 w-8 text-emerald-500 mr-2" />
+              <span className="text-lg font-medium text-slate-700 dark:text-slate-300">Hubballi-Dharwad</span>
             </div>
-            <div className="bg-white/[0.02] border border-white/[0.08] rounded-lg p-6 backdrop-blur-sm">
-              <div className="text-3xl font-bold text-blue-400 mb-2">100+</div>
-              <div className="text-white/60">Traditional Hotels</div>
+
+            <motion.div custom={1} variants={fadeUpVariants} initial="hidden" animate="visible">
+              <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
+                <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
+                  Discover Local
+                </span>
+                <br />
+                <span
+                  className={cn(
+                    "bg-clip-text text-transparent bg-gradient-to-r from-orange-300 via-white/90 to-blue-300",
+                  )}
+                >
+                  Heritage
+                </span>
+              </h1>
+            </motion.div>
+
+            <motion.div custom={2} variants={fadeUpVariants} initial="hidden" animate="visible">
+              <p className="text-base sm:text-lg md:text-xl text-white/40 mb-12 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
+                Explore ancient temples, traditional hotels, and vibrant local events in the twin cities of
+                Hubballi-Dharwad. Your gateway to Karnataka's rich cultural heritage.
+              </p>
+            </motion.div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+              <Link href="/explore">
+                <RainbowButton className="text-lg px-8 py-6 h-auto">
+                  Explore Now
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </RainbowButton>
+              </Link>
+              <Link href="/about">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="text-lg px-8 py-6 h-auto bg-white/10 backdrop-blur-sm border-white/20 text-slate-900 dark:text-white hover:bg-white/20"
+                >
+                  Learn More
+                </Button>
+              </Link>
             </div>
-            <div className="bg-white/[0.02] border border-white/[0.08] rounded-lg p-6 backdrop-blur-sm">
-              <div className="text-3xl font-bold text-green-400 mb-2">25+</div>
-              <div className="text-white/60">Monthly Events</div>
-            </div>
-          </motion.div>
+
+            <motion.div
+              custom={4}
+              variants={fadeUpVariants}
+              initial="hidden"
+              animate="visible"
+              className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center"
+            >
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <div className="text-3xl font-bold text-emerald-500 mb-2">50+</div>
+                <div className="text-slate-700 dark:text-slate-300">Ancient Temples</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <div className="text-3xl font-bold text-emerald-500 mb-2">100+</div>
+                <div className="text-slate-700 dark:text-slate-300">Traditional Hotels</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <div className="text-3xl font-bold text-emerald-500 mb-2">25+</div>
+                <div className="text-slate-700 dark:text-slate-300">Monthly Events</div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
 

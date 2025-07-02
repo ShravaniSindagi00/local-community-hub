@@ -5,13 +5,11 @@ import { Mission } from "@/components/mission"
 
 export default function HomePage() {
   return (
-    <div className="space-y-0">
+    <div className="min-h-screen">
       <TourismHero />
-      <div className="space-y-16 py-16">
-        <Categories />
-        <FeaturedPlace />
-        <Mission />
-      </div>
+      <Categories />
+      <FeaturedPlace />
+      <Mission />
     </div>
   )
 }

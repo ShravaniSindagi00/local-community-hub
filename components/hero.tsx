@@ -4,7 +4,7 @@ import { ArrowRight, MapPin } from "lucide-react"
 
 export function Hero() {
   return (
-    <section className="relative bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-20 md:py-32">
+    <section className="relative py-20 md:py-32">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex items-center justify-center mb-6">
