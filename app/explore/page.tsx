@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Search, MapPin, Filter, Grid3x3, Map, Clock, Building, Utensils, Calendar, Heart } from "lucide-react"
+import { Search, MapPin, Filter, LayoutGrid, Map, Clock, Building, Utensils, Calendar, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button"
 import { Input } from "@/components/ui/input"
@@ -146,7 +146,7 @@ export default function ExplorePage() {
                 onClick={() => setViewMode("grid")}
                 className="rounded-none"
               >
-                <Grid3x3 className="h-4 w-4" />
+                <LayoutGrid className="h-4 w-4" />
               </Button>
               <Button
                 variant={viewMode === "map" ? "default" : "ghost"}
