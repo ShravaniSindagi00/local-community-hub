@@ -38,6 +38,11 @@ const demos = [
     description: "Animated background with rotating circles and multiple variants",
     href: "/demo/background-circles",
   },
+  {
+    title: "Interactive Hover Button",
+    description: "Buttons with sliding text animations and expanding backgrounds",
+    href: "/demo/interactive-hover-button",
+  },
 ]
 
 export default function DemoPage() {

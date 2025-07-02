@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { RainbowButton } from "@/components/ui/rainbow-button"
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button"
 import { Badge } from "@/components/ui/badge"
 import { MapPin, Star, Calendar } from "lucide-react"
 import { useLanguage } from "./language-provider"
@@ -109,9 +109,9 @@ export function PlaceCard({ place }: PlaceCardProps) {
           )}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <Link href={`/${getCategoryPath(place.category)}/${place.id}`} className="flex-1">
-            <RainbowButton className="w-full h-9 text-sm">View Details</RainbowButton>
+            <InteractiveHoverButton text="View Details" className="w-full h-12 text-sm" />
           </Link>
           <BookmarkButton
             placeId={place.id}

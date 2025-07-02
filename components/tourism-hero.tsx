@@ -1,8 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { MapPin, ArrowRight } from "lucide-react"
-import { RainbowButton } from "@/components/ui/rainbow-button"
+import { MapPin } from "lucide-react"
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
@@ -130,12 +130,12 @@ export function TourismHero() {
               </p>
             </motion.div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mt-8">
               <Link href="/explore">
-                <RainbowButton className="text-lg px-8 py-6 h-auto">
-                  Explore Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </RainbowButton>
+                <InteractiveHoverButton
+                  text="Explore Now"
+                  className="w-48 p-4 text-lg font-bold bg-white/10 backdrop-blur-sm border-white/20 text-white hover:text-primary-foreground"
+                />
               </Link>
               <Link href="/about">
                 <Button

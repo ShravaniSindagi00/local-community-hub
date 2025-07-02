@@ -3,9 +3,9 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Search, MapPin, Filter, Grid3X3, Map, Clock, Building, Utensils, Calendar, Heart } from "lucide-react"
+import { Search, MapPin, Filter, Grid3x3, Map, Clock, Building, Utensils, Calendar, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { RainbowButton } from "@/components/ui/rainbow-button"
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
@@ -146,7 +146,7 @@ export default function ExplorePage() {
                 onClick={() => setViewMode("grid")}
                 className="rounded-none"
               >
-                <Grid3X3 className="h-4 w-4" />
+                <Grid3x3 className="h-4 w-4" />
               </Button>
               <Button
                 variant={viewMode === "map" ? "default" : "ghost"}
@@ -238,14 +238,14 @@ export default function ExplorePage() {
             <div className="text-6xl mb-4">🔍</div>
             <h3 className="text-xl font-semibold mb-2">{t("No places found")}</h3>
             <p className="text-muted-foreground mb-4">{t("Try adjusting your search terms or filters")}</p>
-            <RainbowButton
+            <InteractiveHoverButton
+              text="Clear Filters"
+              className="w-48"
               onClick={() => {
                 setSearchTerm("")
                 setSelectedCategory(null)
               }}
-            >
-              {t("Clear filters")}
-            </RainbowButton>
+            />
           </div>
         )}
 

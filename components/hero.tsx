@@ -1,6 +1,7 @@
 import Link from "next/link"
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, MapPin } from "lucide-react"
+import { MapPin } from "lucide-react"
 
 export function Hero() {
   return (
@@ -22,10 +23,7 @@ export function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/explore">
-              <Button size="lg" className="text-lg px-8 py-6 h-auto">
-                Explore Now
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <InteractiveHoverButton text="Explore Now" className="w-48 p-4 text-lg font-bold" />
             </Link>
             <Link href="/about">
               <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto bg-transparent">
