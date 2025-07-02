@@ -1,102 +1,150 @@
 "use client"
 
 import { useState } from "react"
-import { Search } from "lucide-react"
+import { Search, MapPin } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { MapView } from "@/components/map-view"
 import { PlaceCard } from "@/components/place-card"
-import { useLanguage } from "@/components/language-provider"
-import { useData } from "@/lib/shared-data"
+import { MapView } from "@/components/map-view"
 import { ExpandableTabs } from "@/components/ui/expandable-tabs"
-import { Building, Utensils, Calendar, Grid3X3 } from "lucide-react"
+import { ImageAutoSlider } from "@/components/ui/image-auto-slider"
+import { useData } from "@/lib/shared-data"
+import { useLanguage } from "@/components/language-provider"
 
 export default function ExplorePage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [activeFilter, setActiveFilter] = useState("all")
-  const [viewMode, setViewMode] = useState<"list" | "map">("list")
-  const { language, translations } = useLanguage()
-  const { getPublishedPlaces } = useData()
+  const { places } = useData()
+  const { t } = useLanguage()
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("all")
+  const [viewMode, setViewMode] = useState<"grid" | "map">("grid")
 
-  // Only show published places to users
-  const publishedPlaces = getPublishedPlaces()
+  // Tourism-focused images for the slider
+  const tourismImages = [
+    "https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Indian temple
+    "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Heritage architecture
+    "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Indian palace
+    "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Traditional architecture
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Indian monument
+    "https://images.unsplash.com/photo-1477587458883-47145ed94245?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Cultural site
+  ]
 
-  const filteredPlaces = publishedPlaces.filter((place) => {
+  const filteredPlaces = places.filter((place) => {
     const matchesSearch =
-      place.name.en.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      place.name.kn.includes(searchQuery) ||
-      place.location.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesFilter = activeFilter === "all" || place.category === activeFilter
-    return matchesSearch && matchesFilter
+      place.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      place.description.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesCategory = selectedCategory === "all" || place.category === selectedCategory
+    return matchesSearch && matchesCategory
   })
 
+  const categories = [
+    { id: "all", label: "All Places", count: places.length },
+    { id: "temple", label: "Temples", count: places.filter((p) => p.category === "temple").length },
+    { id: "hotel", label: "Hotels", count: places.filter((p) => p.category === "hotel").length },
+    { id: "event", label: "Events", count: places.filter((p) => p.category === "event").length },
+  ]
+
+  const tabsData = categories.map((category) => ({
+    id: category.id,
+    label: category.label,
+    content: (
+      <div className="space-y-4">
+        <p className="text-sm text-muted-foreground">
+          {category.count} {category.label.toLowerCase()} available
+        </p>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {filteredPlaces
+            .filter((place) => category.id === "all" || place.category === category.id)
+            .slice(0, 6)
+            .map((place) => (
+              <PlaceCard key={place.id} place={place} />
+            ))}
+        </div>
+      </div>
+    ),
+  }))
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">{translations.explore.title}</h1>
+    <div className="min-h-screen">
+      {/* Hero Section with Image Slider */}
+      <div className="relative h-96 overflow-hidden">
+        <ImageAutoSlider images={tourismImages} speed={25} className="h-96" />
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-30">
+          <div className="text-center text-white space-y-4 max-w-2xl px-4">
+            <h1 className="text-4xl md:text-6xl font-bold">{t("Explore Hubballi-Dharwad")}</h1>
+            <p className="text-lg md:text-xl text-gray-200">
+              {t("Discover ancient temples, traditional hotels, and vibrant events")}
+            </p>
+            <div className="flex gap-2 max-w-md mx-auto">
+              <Input
+                placeholder={t("Search places...")}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="bg-white/90 text-black"
+              />
+              <Button size="icon" className="bg-primary hover:bg-primary/90">
+                <Search className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        {/* Search Bar */}
-        <div className="relative mb-6">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input
-            placeholder={translations.explore.searchPlaceholder}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 h-12 text-lg"
-          />
+      <div className="container mx-auto px-4 py-8">
+        {/* Filter Section */}
+        <div className="mb-8">
+          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold mb-2">{t("Discover Places")}</h2>
+              <p className="text-muted-foreground">
+                {filteredPlaces.length} {t("places found")}
+              </p>
+            </div>
+
+            <div className="flex gap-2">
+              <Button variant={viewMode === "grid" ? "default" : "outline"} onClick={() => setViewMode("grid")}>
+                Grid View
+              </Button>
+              <Button variant={viewMode === "map" ? "default" : "outline"} onClick={() => setViewMode("map")}>
+                <MapPin className="h-4 w-4 mr-2" />
+                Map View
+              </Button>
+            </div>
+          </div>
         </div>
 
-        {/* Filters */}
-        <div className="mb-6">
-          <ExpandableTabs
-            tabs={[
-              { title: `All (${publishedPlaces.length})`, icon: Grid3X3 },
-              { title: `Temples (${publishedPlaces.filter((p) => p.category === "temple").length})`, icon: Building },
-              { title: `Hotels (${publishedPlaces.filter((p) => p.category === "hotel").length})`, icon: Utensils },
-              { title: `Events (${publishedPlaces.filter((p) => p.category === "event").length})`, icon: Calendar },
-            ]}
-            onChange={(index) => {
-              if (index !== null) {
-                const filterValues = ["all", "temple", "hotel", "event"]
-                setActiveFilter(filterValues[index])
-              }
-            }}
-            className="bg-white/80 backdrop-blur-sm border-white/20"
-          />
+        {/* Expandable Tabs Filter */}
+        <div className="mb-8">
+          <ExpandableTabs tabs={tabsData} defaultTab="all" onTabChange={(tabId) => setSelectedCategory(tabId)} />
         </div>
 
-        {/* View Toggle */}
-        <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as "list" | "map")}>
-          <TabsList className="grid w-full max-w-md grid-cols-2">
-            <TabsTrigger value="list">List View</TabsTrigger>
-            <TabsTrigger value="map">Map View</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="list" className="mt-6">
-            {filteredPlaces.length === 0 ? (
-              <div className="text-center py-12">
-                <h3 className="text-xl font-semibold mb-2">
-                  {searchQuery || activeFilter !== "all" ? "No places found" : "No places available"}
-                </h3>
-                <p className="text-muted-foreground">
-                  {searchQuery || activeFilter !== "all"
-                    ? "Try adjusting your search or filters."
-                    : "New places will appear here once they are added by administrators."}
-                </p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredPlaces.map((place) => (
-                  <PlaceCard key={place.id} place={place} />
-                ))}
-              </div>
-            )}
-          </TabsContent>
-
-          <TabsContent value="map" className="mt-6">
+        {/* Content */}
+        {viewMode === "grid" ? (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {filteredPlaces.map((place) => (
+              <PlaceCard key={place.id} place={place} />
+            ))}
+          </div>
+        ) : (
+          <div className="h-96 rounded-lg overflow-hidden">
             <MapView places={filteredPlaces} />
-          </TabsContent>
-        </Tabs>
+          </div>
+        )}
+
+        {filteredPlaces.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground text-lg">{t("No places found matching your criteria.")}</p>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSearchTerm("")
+                setSelectedCategory("all")
+              }}
+              className="mt-4"
+            >
+              {t("Clear Filters")}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )
