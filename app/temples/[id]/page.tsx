@@ -9,9 +9,9 @@ const mockTemples = {
     description:
       "The Chandramouleshwara Temple is an ancient Shiva temple located in Unkal, Hubballi. Built in the 12th century, this temple showcases beautiful Chalukyan architecture with intricate stone carvings.",
     images: [
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "/temples/Chandar Temple.webp",
+      "/temples/Chandar Temple.webp",
+      "/temples/Chandar Temple.webp",
     ],
     location: "Unkal, Hubballi",
     coordinates: { lat: 15.3647, lng: 75.124 },
